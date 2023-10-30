@@ -21,4 +21,12 @@ typedef struct {
 
 } ring_buffer_t;
 
+void ring_buffer_init(ring_buffer_t *ring_buffer, uint8_t *buffer, uint16_t capacity);
+
+uint8_t ring_buffer_put(ring_buffer_t *ring_buffer, uint8_t data);
+
+uint8_t ring_buffer_get(ring_buffer_t *ring_buffer, uint8_t *data);
+
+uint16_t ring_buffer_size(ring_buffer_t *ring_buffer);
+
 #endif /* INC_RING_BUFFER_H_ */
