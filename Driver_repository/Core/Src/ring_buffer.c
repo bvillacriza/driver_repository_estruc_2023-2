@@ -70,6 +70,8 @@ uint16_t ring_buffer_size(ring_buffer_t *ring_buffer)
 	return size;
 }
 
+/*ring_buffer_is_empty, que se utiliza para verificar si el buffer circular está vacío. Toma un puntero a una estructura ring_buffer_t como argumento.*/
+
 uint8_t ring_buffer_is_empty(ring_buffer_t *ring_buffer)
 {
 	return ring_buffer->head == ring_buffer->tail;

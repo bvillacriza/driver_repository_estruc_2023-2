@@ -49,6 +49,7 @@ uint8_t rx_buffer[16];
 ring_buffer_t ring_buffer_uart_rx;
 
 uint8_t rx_data;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,12 +72,18 @@ int _write(int file, char *ptr, int len)
   * @param  huart UART handle.
   * @retval None
   */
+
+// Callback cuando se completa la transferencia Rx en la UART
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+	// Coloca el dato Rx en un buffer circular y configura la recepción nuevamente
+
 	ring_buffer_put(&ring_buffer_uart_rx, rx_data);
 
 	HAL_UART_Receive_IT(&huart2, &rx_data, 1);
 }
+
 
 /* USER CODE END 0 */
 
@@ -112,7 +119,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ring_buffer_init(&ring_buffer_uart_rx, rx_buffer, 16);
 
-   HAL_UART_Receive_IT(&huart2, &rx_data, 1);
+  HAL_UART_Receive_IT(&huart2, &rx_data, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -131,7 +138,14 @@ int main(void)
 	  	  }
 	  	  HAL_Delay(1000); // to wait one second
 
-	  	  uint8_t is_empty = ring_buffer_is_empty(&ring_buffer_uart_rx);
+	  	/*uint8_t is_empty = ring_buffer_is_empty(&ring_buffer_uart_rx); */
+
+	  	// Check if the ring buffer is empty
+	  	if (ring_buffer_is_empty(&ring_buffer_uart_rx)) {
+	  	  // The ring buffer is empty
+	  	} else {
+	  	  // The ring buffer is not empty
+	  	}
 
     /* USER CODE BEGIN 3 */
   }
