@@ -130,6 +130,9 @@ int main(void)
 	  		  printf("Rec: %s\r\n", rx_message);
 	  	  }
 	  	  HAL_Delay(1000); // to wait one second
+
+	  	  uint8_t is_empty = ring_buffer_is_empty(&ring_buffer_uart_rx);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

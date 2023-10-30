@@ -69,3 +69,8 @@ uint16_t ring_buffer_size(ring_buffer_t *ring_buffer)
 
 	return size;
 }
+
+uint8_t ring_buffer_is_empty(ring_buffer_t *ring_buffer)
+{
+	return ring_buffer->head == ring_buffer->tail;
+}

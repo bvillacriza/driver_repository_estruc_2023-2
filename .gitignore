@@ -1,0 +1,16 @@
+
+*.cyclo
+Driver_repository/Debug/Core/Src/main.cyclo
+Driver_repository/Debug/Core/Src/main.cyclo
+Driver_repository/Debug/Core/Src/main.o
+Driver_repository/Debug/Core/Src/main.su
+Driver_repository/Debug/Core/Src/ring_buffer.cyclo
+Driver_repository/Debug/Core/Src/main.cyclo
+Driver_repository/Debug/Core/Src/main.o
+Driver_repository/Debug/Driver_R_SC_2023.map
+Driver_repository/Debug/Driver_R_SC_2023.list
+Driver_repository/Debug/Driver_R_SC_2023.elf
+Driver_repository/Debug/Core/Src/subdir.mk
+Driver_repository/Debug/Core/Src/ring_buffer.su
+Driver_repository/Debug/Core/Src/ring_buffer.o
+Driver_repository/Debug/Core/Src/ring_buffer.cyclo
