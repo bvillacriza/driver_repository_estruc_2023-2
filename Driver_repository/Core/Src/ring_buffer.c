@@ -36,7 +36,10 @@ uint8_t ring_buffer_put(ring_buffer_t *ring_buffer, uint8_t data)
 
 	if (ring_buffer->head == ring_buffer->tail) {
 		ring_buffer->is_full = 1;
+		return 0;
 	}
+
+	return 1;
 }
 
 /**
@@ -75,4 +78,19 @@ uint16_t ring_buffer_size(ring_buffer_t *ring_buffer)
 uint8_t ring_buffer_is_empty(ring_buffer_t *ring_buffer)
 {
 	return ring_buffer->head == ring_buffer->tail;
+}
+
+uint8_t ring_buffer_is_full(ring_buffer_t *ring_buffer)
+{
+	return (ring_buffer->is_full == 0);
+}
+
+/**
+ * @brief this function resets the buffer to be empty
+ */
+void ring_buffer_reset(ring_buffer_t *ring_buffer)
+{
+	ring_buffer->tail = 0;
+	ring_buffer->head = 0;
+	ring_buffer->is_full = 0;
 }

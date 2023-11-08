@@ -29,7 +29,10 @@ uint8_t ring_buffer_get(ring_buffer_t *ring_buffer, uint8_t *data);
 
 uint16_t ring_buffer_size(ring_buffer_t *ring_buffer);
 
-// Función para verificar si el buffer está vacío
-uint8_t ring_buffer_is_empty(ring_buffer_t *ring_buffer);
+uint8_t ring_buffer_is_empty(ring_buffer_t *ring_buffer);// Función para verificar si el buffer está vacío
+
+uint8_t ring_buffer_is_full(ring_buffer_t *ring_buffer);// Función para verificar si el buffer está lleno
+
+void ring_buffer_reset(ring_buffer_t *ring_buffer);// Función para vaciar el buffer
 
 #endif /* INC_RING_BUFFER_H_ */

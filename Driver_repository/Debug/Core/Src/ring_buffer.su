@@ -1,5 +1,7 @@
 ../Core/Src/ring_buffer.c:14:6:ring_buffer_init	24	static
 ../Core/Src/ring_buffer.c:28:9:ring_buffer_put	16	static
-../Core/Src/ring_buffer.c:46:9:ring_buffer_get	16	static
-../Core/Src/ring_buffer.c:60:10:ring_buffer_size	24	static
-../Core/Src/ring_buffer.c:75:9:ring_buffer_is_empty	16	static
+../Core/Src/ring_buffer.c:49:9:ring_buffer_get	16	static
+../Core/Src/ring_buffer.c:63:10:ring_buffer_size	24	static
+../Core/Src/ring_buffer.c:78:9:ring_buffer_is_empty	16	static
+../Core/Src/ring_buffer.c:83:9:ring_buffer_is_full	16	static
+../Core/Src/ring_buffer.c:91:6:ring_buffer_reset	16	static
