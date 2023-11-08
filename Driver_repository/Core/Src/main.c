@@ -24,6 +24,10 @@
 #include <stdio.h>
 
 #include "ring_buffer.h"
+
+#include "ssd1306.h"
+
+#include "ssd1306_fonts.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -128,6 +132,13 @@ int main(void)
   ring_buffer_init(&ring_buffer_uart_rx, rx_buffer, 16);
 
   HAL_UART_Receive_IT(&huart2, &rx_data, 1);
+
+  ssd1306_Init();
+  ssd1306_Fill(Black);
+  ssd1306_SetCursor(20, 20);
+  ssd1306_WriteString("Hello World!", Font_7x10, White);
+  ssd1306_UpdateScreen();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
