@@ -59,6 +59,10 @@ uint8_t rx_buffer[16];
 uint8_t rx_data;
 
 uint16_t key_event = 0xFF;
+
+uint8_t count = 0;//contador para la cantidad de veces que se ha presionado una tecla
+
+uint16_t memory[5]; //variable en la que se guardara la contraseña con la que se hara la comparacion de la memoria temporal
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -317,28 +321,88 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_I2C1_Init();
+
+
   /* USER CODE BEGIN 2 */
   ring_buffer_init(&ring_buffer_uart_rx, rx_buffer, 16);
-
+  keypad_init(); // Initialize the keypad functionality
   HAL_UART_Receive_IT(&huart2, &rx_data, 1);
 
-  keypad_init(); // Initialize the keypad functionality
+  ssd1306_Init();
+  ssd1306_Fill(Black);
+  ssd1306_SetCursor(20, 20);
+  ssd1306_WriteString("<3", Font_7x10, White);
+  ssd1306_UpdateScreen();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if (key_event != 0xFF) { // check if there is a event from the EXTi callback
+	 /* if (key_event != 0xFF) { // check if there is a event from the EXTi callback
 		  uint16_t key_pressed = keypad_handler(key_event); // call the keypad handler
 		  if (key_pressed != 0xFF) {
 			  printf("Key pressed: %x\r\n", key_pressed); // print the key pressed
 		  }
 		  key_event = 0xFF; // clean the event
 	  }
+
+	  */
+	  // se ingresa cada vez que se pulsa un tecla del taclado.
+	  if (key_event != 0xFF) { // check if there is a event from the EXTi callback
+	 		  uint16_t key_pressed = keypad_handler(key_event); // call the keypad handler
+	 		  if (key_pressed != 0xFF) {
+	 			  printf("Key pressed: %x\r\n", key_pressed); // print the key pressed
+
+	 			  //save the four digits of the key and press '#' to end the reading and proceed with the verification.
+	 			  if (memory[4] != 0x0F){
+	 			  memory[count] = key_pressed;
+	 			  count = count + 1;}
+	 		  	  }
+
+	 		  	  // validation for date of birth 1999.
+	 		  	  // It is validated by pressing the # key to complete the 5 keys pressed.
+	 		  	  if (memory[4] == 0x0F){
+	 		  		  // To check if the values entered match, Pass is printed on the screen.
+	 		  		  if (memory[0] == 0x01 && memory[1] == 0x09 && memory[2] == 0x09 && memory[3] == 0x09){
+	 		  			  ssd1306_Init();
+	 		  			  ssd1306_Fill(Black);
+	 		  			  ssd1306_SetCursor(20, 20);
+	 		  			  ssd1306_WriteString("Pass", Font_7x10, White);
+	 		  			  ssd1306_UpdateScreen();
+
+	 		  		  } else {
+	 		  			  //otherwise Fail is printed on the screen.
+	 		  			  ssd1306_Init();
+	 		  			  ssd1306_Fill(Black);
+	 		  			  ssd1306_SetCursor(20, 20);
+	 		  			  ssd1306_WriteString("Fail", Font_7x10, White);
+	 		  			  ssd1306_UpdateScreen();
+	 		  		  	  	  }
+	 		  	  	  }
+	 		  	  	  //Once you have entered the data and verified whether the key is correct or not, press '*' to re-enter a key.
+	 		  	  if (key_pressed == 0x0E){
+	 		  		  for (uint8_t i = 0; i < 5 ; i++){
+	 		  			  memory[i]= 0;
+	 		  			  count = 0;
+	 		  		  }
+	 		  		  ssd1306_Init();
+	 		  		  ssd1306_Fill(Black);
+	 		  		  ssd1306_SetCursor(20, 20);
+	 		  		  ssd1306_WriteString("Ingrese key", Font_7x10, White);
+	 		  		  ssd1306_UpdateScreen();
+	 		  	  }
+	 		  key_event = 0xFF; // clean the event
+
+	  	  }
+
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
