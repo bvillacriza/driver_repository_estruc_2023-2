@@ -1,10 +1,3 @@
-/*
- * ring_buffer.c
- *
- *  Created on: 30 oct. 2023
- *      Author: BRAYAN ALEXIS
- */
-
 
 #include "ring_buffer.h"
 
@@ -38,7 +31,6 @@ uint8_t ring_buffer_put(ring_buffer_t *ring_buffer, uint8_t data)
 		ring_buffer->is_full = 1;
 		return 0;
 	}
-
 	return 1;
 }
 
@@ -48,7 +40,7 @@ uint8_t ring_buffer_put(ring_buffer_t *ring_buffer, uint8_t data)
 */
 uint8_t ring_buffer_get(ring_buffer_t *ring_buffer, uint8_t *data)
 {
-	if ((ring_buffer->is_full != 0) || (ring_buffer->tail != ring_buffer->head)) {
+	if (ring_buffer_is_empty(ring_buffer) == 0) {
 		*data = ring_buffer->buffer[ring_buffer->tail];
 		ring_buffer->tail = (ring_buffer->tail + 1) % ring_buffer->capacity;
 		ring_buffer->is_full = 0;
@@ -73,13 +65,17 @@ uint16_t ring_buffer_size(ring_buffer_t *ring_buffer)
 	return size;
 }
 
-/*ring_buffer_is_empty, que se utiliza para verificar si el buffer circular está vacío. Toma un puntero a una estructura ring_buffer_t como argumento.*/
-
+/**
+ * @brief this function checks if the buffer is empty
+ */
 uint8_t ring_buffer_is_empty(ring_buffer_t *ring_buffer)
 {
-	return ring_buffer->head == ring_buffer->tail;
+	return ((ring_buffer->is_full == 0) && (ring_buffer->tail == ring_buffer->head));
 }
 
+/**
+ * @brief this function checks if the buffer is full
+ */
 uint8_t ring_buffer_is_full(ring_buffer_t *ring_buffer)
 {
 	return (ring_buffer->is_full == 0);
@@ -94,3 +90,5 @@ void ring_buffer_reset(ring_buffer_t *ring_buffer)
 	ring_buffer->head = 0;
 	ring_buffer->is_full = 0;
 }
+
+
